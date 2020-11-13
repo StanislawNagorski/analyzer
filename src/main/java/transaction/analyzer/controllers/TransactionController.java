@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import transaction.analyzer.models.Transaction;
 import transaction.analyzer.service.TransactionService;
-import transaction.analyzer.utils.EndPointsUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,19 +25,25 @@ public class TransactionController {
         return service.findAll();
     }
 
-    @GetMapping("/average/{department}")
+    @GetMapping("/{department}/average")
     public String getAverageForDepartment(@PathVariable String department){
         double averageByDepartment = service.getAverageAmountByDepartment(department);
         return String.format(AVERAGE_INFO,department,averageByDepartment);
     }
 
-    @GetMapping("/max/{department}")
+    @GetMapping("/{department}/median")
+    public String getMedianForDepartment(@PathVariable String department){
+        double median = service.getMedianAmountByDepartment(department);
+        return String.format(MEDIAN_INFO, department, median);
+    }
+
+    @GetMapping("/{department}/max")
     public String getMaxForDepartment(@PathVariable String department){
         Optional<Transaction> maxAmountByDepartment = service.getMaxAmountByDepartment(department);
         return maxAmountByDepartment.isPresent()? maxAmountByDepartment.get().toString() : NOT_FIND;
     }
 
-    @GetMapping("/min/{department}")
+    @GetMapping("/{department}/min")
     public String getMinForDepartment(@PathVariable String department){
         Optional<Transaction> minAmountByDepartment = service.getMinAmountByDepartment(department);
         return minAmountByDepartment.isPresent()? minAmountByDepartment.get().toString() : NOT_FIND;
