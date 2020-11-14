@@ -39,14 +39,15 @@ public class TransactionController {
 
     @GetMapping("/{department}/max")
     public String getMaxForDepartment(@PathVariable String department){
-        Optional<Transaction> maxAmountByDepartment = service.getMaxAmountByDepartment(department);
-        return maxAmountByDepartment.isPresent()? maxAmountByDepartment.get().toString() : NOT_FIND;
+        double max = service.getMaxAmountByDepartment(department);
+        return String.format(MAX_IN_PLN,department, max);
+
     }
 
     @GetMapping("/{department}/min")
     public String getMinForDepartment(@PathVariable String department){
-        Optional<Transaction> minAmountByDepartment = service.getMinAmountByDepartment(department);
-        return minAmountByDepartment.isPresent()? minAmountByDepartment.get().toString() : NOT_FIND;
+        double min = service.getMinAmountByDepartment(department);
+        return String.format(MIN_IN_PLN,department, min);
     }
 }
 

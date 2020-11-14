@@ -40,22 +40,26 @@ public class TransactionService {
                 .average().getAsDouble();
     }
 
-    public Optional<Transaction> getMaxAmountByDepartment(String department) {
-        return getTransactions(department).stream()
-                .max((o1, o2) -> (int) (convertToPLN(o1) - convertToPLN(o2)));
+    public double getMaxAmountByDepartment(String department) {
+        Transaction transaction = getTransactions(department).stream()
+                .max((o1, o2) -> (int) (convertToPLN(o1) - convertToPLN(o2)))
+                .get();
+        return convertToPLN(transaction);
     }
 
-    public Optional<Transaction> getMinAmountByDepartment(String department) {
-        return getTransactions(department).stream()
-                .min((o1, o2) -> (int) (convertToPLN(o1) - convertToPLN(o2)));
+    public double getMinAmountByDepartment(String department) {
+        Transaction transaction = getTransactions(department).stream()
+                .min((o1, o2) -> (int) (convertToPLN(o1) - convertToPLN(o2)))
+                .get();
+        return convertToPLN(transaction);
     }
 
     public double getMedianAmountByDepartment(String department) {
-        List<Double> doubles = getTransactions(department).stream()
+        List<Double> moneyInPLN = getTransactions(department).stream()
                 .map(CurrencyConverter::convertToPLN)
                 .collect(Collectors.toList());
-        int size = doubles.size();
-        return size % 2 != 0 ? doubles.get(size / 2) : doubles.get(size / 2 - 1);
+        int size = moneyInPLN.size();
+        return size % 2 != 0 ? moneyInPLN.get(size / 2) : moneyInPLN.get(size / 2 - 1);
     }
 
     private List<Transaction> getTransactions(String department) {
