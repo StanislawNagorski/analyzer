@@ -17,15 +17,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/currency")
 public class CurrencyController {
-    public static final String URL = "/currencies.json";
-    public static final String URL_1 = "http://api.nbp.pl/api/exchangerates/tables/A/?format=json";
+    public static final String URL = "http://api.nbp.pl/api/exchangerates/tables/A/?format=json";
 
     @GetMapping
     public List<Rates> callForCurrency() throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<Currency>> typeReference = new TypeReference<>() {};
-        URLConnection connection = new URL(URL_1).openConnection();
+        URLConnection connection = new URL(URL).openConnection();
         InputStream response = connection.getInputStream();
         List<Currency> currency = mapper.readValue(response, typeReference);
         return currency.get(0).getRates();

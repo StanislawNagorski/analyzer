@@ -16,13 +16,13 @@ public class CurrencyConverter {
         String moneyString = transaction.getMoney();
         double money = convertToDouble(moneyString);
         String transactionCurrency = transaction.getCurrency();
-        double moneyInPLN = money;
+
         for (Rates currentRate : rates) {
-            if (currentRate.getCurrency().equals(transactionCurrency)){
-                moneyInPLN = money * currentRate.getMid();
+            if (currentRate.getCode().equals(transactionCurrency)){
+                return money * currentRate.getMid();
             }
         }
-        return moneyInPLN;
+        return money;
     }
 
     private static double convertToDouble(String money){
