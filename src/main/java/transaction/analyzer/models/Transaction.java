@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import transaction.analyzer.utils.CurrencyConverter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,5 +28,3 @@ public class Transaction {
 
 }
 
-
-//money":"$7.46","currency":"UAH","department":"Electronics"
